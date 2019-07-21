@@ -50,10 +50,10 @@ The solution will be matched against a benchmark that models a typical naive, sc
 
 We look at our model's performance in terms of the following confusion matrix: 
 
-| | *Predicted churn* | *Predicted Retention*  |
+| | Predicted churn | Predicted Retention |
 | ------------- |:-------------:|:-----:|
-| *Churning customer* | true positive | false negative |
-| *Retained customer* | false positive | true negative |
+| **Churning customer** | true positive | false negative |
+| **Retained customer** | false positive | true negative |
 
 Our model's predictions should have as few false negatives as possible, as those would be customers we likely lose because we don't target them with a retention campaign. We are not as much concerned with false positives, as a retention campaign is considered much less costly than a (re-)acquisition campaign. In other words, we can afford some false positives, as long as we miss as few as possible true churning customers. 
 
