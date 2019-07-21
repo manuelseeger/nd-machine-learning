@@ -61,9 +61,9 @@ In a real-world example, the distribution of churners and non-churners is highly
 
 We are thus mostly concerned in keeping false negatives low, and in catching as many churning customers as possible. In terms of performance metrics, we will model this evaluation as a high-recall f-beta score: 
 
-f $$\beta$$ with $$\beta$$ = 2
+f&beta;-score with &beta; = 2
 
-This will be the main metric to evaluate our models' performance. During the project the value for $$\beta$$ will be reviewed and fine tuned. 
+This will be the main metric to evaluate our models' performance. During the project the value for &beta; will be reviewed and fine tuned. 
 
 ### Project Design
 
@@ -74,6 +74,7 @@ In a first step, the dataset will be viewed for quality. Descriptive statistics 
 In this section, the data will be reviewed for fitness for the prediction task, mainly using visualization. The features will be tested for correlation and how well they appear to match assumptions based on industry knowledge. 
 
 Features will be semantically grouped where applicable. Apparent important of the features for the predicion task will be discussed.
+Features unlikely to contribute to the predictive power of a model will be removed. 
 
 #### Benchmark model
 
