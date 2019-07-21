@@ -50,7 +50,7 @@ The solution will be matched against a benchmark that models a typical naive, sc
 
 We look at our model's performance in terms of the following confusion matrix: 
 
-| | Predicted churn | Predicted Retention |
+| - | Predicted churn | Predicted Retention |
 | ------------- |:-------------:|:-----:|
 | **Churning customer** | true positive | false negative |
 | **Retained customer** | false positive | true negative |
