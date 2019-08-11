@@ -26,6 +26,9 @@ Predicting which customers are likely to churn, and which are likely to stay thu
 
 This project will develop different models for customer churn prediction on a customer dataset, and select the model with the best performance on predicting if a customer is likely to churn. 
 
+In machine learning terms, predicting churn is a binary classification problem. There is one target variable, Churn, which can have 1 of 2 labels: Yes - the customer is leaving this month; No - The customer is staying with the provider.
+Our machine learning problem solution will take information about the customer as input (such as financial, contractual, or personal), and output the probabilities that a customer belongs to the churner and the non-churner group. 
+
 ### Datasets and Inputs
 
 The churn prediction will be done on a dataset of Telco customers. The dataset and its input variables is described in detail in the appendix of V. Umayaparvathi1, K. Iyakutt in A Survey on Customer Churn Prediction in Telecom Industry: Datasets,
@@ -34,17 +37,39 @@ https://www.irjet.net/archives/V3/i4/IRJET-V3I4213.
 
 The dataset was originally donated by an (anonymous) US carrier and published by the Fuqua School of Business at Duke University as part of a machine learning competition. The data was obtained from Kaggle [https://www.kaggle.com/jpacse/datasets-for-churn-telecom/downloads/datasets-for-churn-telecom.zip/2]
 
-The dataset consists of 58 variables describing a customer in terms of demography, payment history, credit score, service usage pattern, and past interactions with the customer. The target variable is Churn, which denotes if the customer has churned within the past month. The training data has been selected such that churners are overrepresented compared to non-churners, to enable efficient analysis and learning. The training set has 51047 records, of which 14711 are churners.
+The dataset consists of 58 variables describing a customer in terms of demography, payment history, credit score, service usage pattern, and past interactions with the customer. The target variable is Churn, which denotes if the customer has churned within the past month. The training data has been selected such that churners are overrepresented compared to non-churners, to enable efficient analysis and learning. The training set has 51047 records, of which 14711 are churners, making this an un-balanced dataset.
+
+Here are some sample records from the training set: 
+
+| CustomerID |	Churn | MonthlyRevenue | MonthlyMinutes | TotalRecurringCharge | ... | Occupation | MaritalStatus |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 3053510 | No | 50.74 | 16.99 | 6.0 | ... | Retired | Yes |
+| 3302722 | Yes | 34.99 | 313.0	| 45.0 | ... | Other | Unknown |
+| 3071898 | No | 85.92 | 620.0 | 50.0 | ... | Professional | No |
 
 There is a separate test dataset which is a representative sample of customers in a given month. Labels for this data set have not been published. The project will thus apply a train-test split on the training data set to test model performance. 
 
 ### Solution Statement
 
-Predicting Churn from the proposed dataset presents a supervised classification problem. The solution will runs several supervised classification algorithms on the data to find the model that best predicts churn for the features selected. The input variables will be analyzed for their power in predicting the target variable Churn and pre-processed where required. The different models will then be trained on the prepared input data. Performance metrics of the different models will be collected to determine the best model for churn prediction.  
+Predicting Churn from the proposed dataset presents a supervised classification problem. The solution will apply the following supervised classification algorithms on the data to find the model that best predicts churn for the features selected:
+ 
+- Logistic Regression
+- Decision Trees (in the form of random forest)
+- Neural Nets
+- Boosted decision trees (in the form of XGBoost) 
+ 
+The input variables will be analyzed for their power in predicting the target variable Churn and pre-processed where required. The different models will then be trained on the prepared input data. 
+
+Performance metrics of the models will be collected to determine the best model for churn prediction. The model best performing under the evaluation metric discussed further below will be selected as the solution. 
 
 ### Benchmark Model
 
-The solution will be matched against a benchmark that models a typical naive, scheduled segmentation based on a heuristic. The benchmark heuristic will target all customers based on how long they have subscribed to their current service. Since it's industry practice to offer service in 1 year subscription plans, the naive prediction will predict churn on all customers just before their 1 year term runs out, to account for notice period. Since a notice period is not part of the dataset, an assumed notice period will be determined through exploration data analysis on the column MonthsInService. 
+Each solution candidate model will be benchmarked against a baseline model. For a baseline model, the data will be split into churners and non-churners by a kNN-classifier with k=2. A kNN classifier is unlikely to capture complex interactions well compared to the candidate models, but will give a good baseline for performance which the candidate models can improve on. 
+
+To keep benchmarking consistent, the kNN-classifier will be run on the same training data as the solution models, after the data has been cleaned for obvious quality flaws (like missing values, etc), but before the full pre-processing pipeline is built. 
+Within one benchmarking run, the train and test split, as well as other functionality based on pseudo-randomness will be kept constant and reproducible by explicitly seeding the implementations random generator. 
+
+
 
 ### Evaluation Metrics
 
@@ -70,17 +95,15 @@ This will be the main metric to evaluate our models' performance. During the pro
 #### Initial Data Analysis
 In a first step, the dataset will be viewed for quality. Descriptive statistics on the data features will be collected, columns checked for missing values, normality, and skew. Data will be cleaned and transformations applied where necessary.
 
+#### Benchmark model
+
+After data has been cleaned for quality shortcomings, the benchmark kNN classifier will be applied to the data. The performance metric of the benchmark classifier will be the baseline for the solution model to improve on. 
+
 #### Exploratory data analysis
 In this section, the data will be reviewed for fitness for the prediction task, mainly using visualization. The features will be tested for correlation and how well they appear to match assumptions based on industry knowledge. 
 
 Features will be semantically grouped where applicable. Apparent important of the features for the predicion task will be discussed.
 Features unlikely to contribute to the predictive power of a model will be removed. 
-
-#### Benchmark model
-
-Based on the results of EDA, a simple benchmark model will be build on the MonthInService feature.
-
-Simple benchmark model to be build: Churn if MonthsInService greater than 1 year minus notice period (from EDA). 
 
 #### Data preprocessing 
 
