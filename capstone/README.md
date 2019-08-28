@@ -2,7 +2,7 @@
 
 ## Capstone Project: Predicting customer churn
 
-Implements a machine learning classifier to predict customer churn in the telco industry based on customer data. Read the full report in [Capstone Churn Prediction Report Manuel Seeger.pdf](Capstone Churn Prediction Report Manuel Seeger.pdf)
+Implements a machine learning classifier to predict customer churn in the telco industry based on customer data. Read the full report in ["Capstone Churn Prediction Report Manuel Seeger.pdf"]("Capstone Churn Prediction Report Manuel Seeger.pdf")
 ### Implementation
 
 Run capstone.ipynb to reproduce the results of the project.
