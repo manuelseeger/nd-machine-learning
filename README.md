@@ -1,5 +1,5 @@
 # nd-machine-learning
-Projects from Udacity's Machine Learning Nanodegree
+My completed projects from Udacity's Machine Learning Nanodegree
 
 ## Capstone: Predicting customer churn
 Directory: [capstone](capstone)
