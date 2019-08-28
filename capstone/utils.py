@@ -68,7 +68,7 @@ class MetricReport:
     def predict_report(self, clf, X_test, y_true):
 
         y_pred = clf.predict(X_test)
-        precision, recall, f1, support = precision_recall_fscore_support(y_pred, y_true, average='macro')
+        precision, recall, f1, support = precision_recall_fscore_support(y_pred, y_true, average='binary')
         tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
 
         result = {
@@ -83,11 +83,20 @@ class MetricReport:
             'Precision': precision,
             'Recall': recall,
             'F1': f1,
-            'Support': support
         }
 
         for s in self.success_rate:
             result['Cost[{}]'.format(s)] = self.calculate_cost(tn, fp, fn, tp, s)
+        return result
+
+    def add_from_dict(self, clf, d):
+        result = {
+            **d,
+            'Classifier': clf.__class__.__name__,
+        }
+        for s in self.success_rate:
+            result['Cost[{}]'.format(s)] = self.calculate_cost(result['TN'], result['FP'], result['FN'], result['TP'], s)
+        self.report = self.report.append(result, ignore_index=True)
         return result
 
     def predict_single(self, clf, X_test, y_true):
@@ -108,7 +117,10 @@ class MetricReport:
         cost += fn * self.acquisition_campaign
         return cost
 
-
+    def reset(self, beta=None):
+        self.report = self.make_df()
+        if beta is not None:
+            self.beta = beta
 
 def fbeta_loss(y_true, y_pred, beta=2):
     ''' Custom loss function directly based on F-score to be used as a loss in Keras.
@@ -138,7 +150,7 @@ def draw_learning_curves(estimator, X, y, n_jobs, random_state, scoring):
     X, y = randomize(X,y)
     train_sizes, train_scores, test_scores = learning_curve(
         estimator, X, y, cv=5, n_jobs=n_jobs,
-        train_sizes=np.linspace(.1, 1.0, 100),
+        train_sizes=np.linspace(.2, 1.0, 20),
         scoring=scoring, verbose=0, random_state=random_state)
 
     train_scores_mean = np.mean(train_scores, axis=1)
