@@ -20,7 +20,7 @@ Given an image of a dog, the algorithm will identify an estimate of the canineâ€
 * Transfer learning
 * Keras / tensorflow
 
-## Reinforment Learning
+## Reinforcement Learning
 Repository: https://github.com/manuelseeger/RL-Quadcopter-2
 
 Teach a quadcopter how to fly with reinforcement learning. Includes implementations of DDPG agents for the quadcopter environment and the mountaincar-continuous environment.   
