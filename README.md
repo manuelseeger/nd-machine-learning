@@ -1,6 +1,8 @@
 # nd-machine-learning
 My completed projects from Udacity's Machine Learning Engineer Nanodegree
 
+My Nanodegree certificate: https://graduation.udacity.com/confirm/EGH7NNKR
+
 ## Capstone: Predicting customer churn
 Directory: [capstone](capstone)
 
